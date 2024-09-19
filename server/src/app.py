@@ -2,10 +2,11 @@ import os
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from flask_mail import Mail, Message
+from config import USERNAME, PASSWORD, ORIGIN
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3001"}})
+CORS(app, resources={r"/api/*": {"origins": ORIGIN}})
 
 # Set up the Flask-Mail
 app.config.from_mapping(
@@ -13,8 +14,8 @@ app.config.from_mapping(
     MAIL_SERVER ='smtp.elasticemail.com',  # Update the SMTP server
     MAIL_PORT = 2525,  # Use the correct SMTP port (587 for TLS)
     MAIL_USE_TLS = True,  # Enable TLS encryption
-    MAIL_USERNAME = 'justinycareer@gmail.com',  # Use your email address
-    MAIL_PASSWORD = 'FBB87DDE9ACAF8531DD469E77E81A28D9785',  # Use your email password
+    MAIL_USERNAME = USERNAME,
+    MAIL_PASSWORD = PASSWORD,
     SECURITY_PASSWORD_SALT = 'jo-enmedia_security_salt'
 )
 
@@ -24,8 +25,8 @@ mail = Mail(app)
 # info@jo-enmedia.com
 def send_contact_email(user_email, subject, message):
     msg = Message(subject,
-                  sender="justinycareer@gmail.com",
-                  recipients=['justinycareer@gmail.com'],
+                  sender=USERNAME,
+                  recipients=[USERNAME],
                   reply_to=user_email)
     msg.body = message
     try:
@@ -51,7 +52,7 @@ def contact():
     print(phone)
     subject = "Jo-Enmedia user enquiry"
 
-    fullMessage = "\nUser's Contact Detail: \n\n" + "Name: " + name + "\nEmail: " + userEmail + "\nContact Number: " + phone
+    fullMessage = "A user has uploaded its contact details through jo-enmedia.com/#/contact.\n\nUser's Contact Detail: \n\n" + "Name: " + name + "\nEmail: " + userEmail + "\nContact Number: " + phone
     
     if not all([name, userEmail, phone]):
         return jsonify({'error': 'Missing data'}), 400
