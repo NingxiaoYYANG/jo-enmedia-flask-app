@@ -3,10 +3,15 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from flask_mail import Mail, Message
 from config import USERNAME, PASSWORD, ORIGIN
+import time
 
 app = Flask(__name__)
 
 CORS(app, resources={r"/api/*": {"origins": ORIGIN}})
+
+def format_server_time():
+    server_time = time.localtime()
+    return time.strftime("%I %M %S %p", server_time)
 
 # Set up the Flask-Mail
 app.config.from_mapping(
@@ -34,12 +39,14 @@ def send_contact_email(user_email, subject, message):
         return 'Contact email sent successfully!'
     except Exception as e:
         import traceback
-        print(e,traceback.format_exc())
+        print("Error:", e)
+        print("Traceback:", traceback.format_exc())
         return f'Error sending contact email: {str(e)}\n{traceback.format_exc()}'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    context = { 'server_time': format_server_time() }
+    return render_template('index.html', context=context)
 
 @app.route('/api/contact_us', methods=['POST'])
 def contact():

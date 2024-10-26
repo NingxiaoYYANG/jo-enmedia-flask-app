@@ -2,13 +2,10 @@
 # USERNAME = 'justinycareer@gmail.com'
 # PASSWORD = 'FBB87DDE9ACAF8531DD469E77E81A28D9785'
 
-USERNAME = 'it@jo-enmedia.com'
-PASSWORD = 'AC6C0CC3FD251B8F5C94B872F2E74A0B3696'
-
-ORIGIN = "http://localhost:3000"
+# ORIGIN = "http://localhost:3000"
 
 # Official
-# USERNAME = 'info@jo-enmedia.com'
-# PASSWORD = '7135DC61C339B751E80AB8003859D5AB5AEF' 
+USERNAME = 'info@jo-enmedia.com'
+PASSWORD = 'EB6F94442A62BFBED2B527A1FDFB396FE059' 
 
-# ORIGIN = "https://jo-enmedia.com"
+ORIGIN = ["https://tk-plus-71c88.firebaseapp.com", "https://tk-plus-71c88.web.app", "https://jo-enmedia.com"]
